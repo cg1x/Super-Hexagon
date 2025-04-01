@@ -24,6 +24,7 @@ public class HelloApplication extends Application {
 
         Background background = new Background(root, color);
         Hexagon hexagon = new Hexagon(root, color);
+        GameLoop gameLoop = new GameLoop(hexagon, background);
 
         stage.setTitle("Super Hexagon");
         Image icon = new Image("icon.png");
@@ -31,9 +32,10 @@ public class HelloApplication extends Application {
         stage.setWidth(800);
         stage.setHeight(800);
         stage.setResizable(false);
-
         stage.setScene(scene);
         stage.show();
+
+        gameLoop.start();
     }
 
     public static void main(String[] args) {
