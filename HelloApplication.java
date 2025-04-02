@@ -24,7 +24,11 @@ public class HelloApplication extends Application {
 
         Background background = new Background(root, color);
         Hexagon hexagon = new Hexagon(root, color);
-        GameLoop gameLoop = new GameLoop(hexagon, background);
+        Player player = new Player(root, color);
+        GameLoop gameLoop = new GameLoop(hexagon, background, player);
+        Controller controller = new Controller(player);
+
+        scene.setOnKeyPressed(controller::handle);
 
         stage.setTitle("Super Hexagon");
         Image icon = new Image("icon.png");
