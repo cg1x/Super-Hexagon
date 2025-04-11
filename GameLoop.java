@@ -6,14 +6,17 @@ public class GameLoop extends AnimationTimer {
     public Hexagon hexagon;
     public Background background;
     public Player player;
-    private Controller controller;
+    public Obstacle obstacle;
+    public Controller controller;
     public double rotationSpeed = 0.5;
-    public double movementSpeed = 2;
+    public double playerSpeed = 2;
+    public double obstacleSpeed = 0.5;
 
-    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller) {
+    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller, Obstacle obstacle) {
         this.hexagon = hexagon;
         this.background = background;
         this.player = player;
+        this.obstacle = obstacle;
         this.controller = controller;
     }
     @Override
@@ -21,11 +24,13 @@ public class GameLoop extends AnimationTimer {
         hexagon.rotate(rotationSpeed);
         background.rotate(rotationSpeed);
         player.rotate(rotationSpeed);
+        obstacle.rotate(rotationSpeed);
+        obstacle.move(-obstacleSpeed);
         if (controller.isMovingLeft()) {
-            player.move(-movementSpeed);
+            player.move(-playerSpeed);
         }
         if (controller.isMovingRight()) {
-            player.move(movementSpeed + 2 * rotationSpeed);
+            player.move(playerSpeed + 2 * rotationSpeed);
         }
     }
 }
