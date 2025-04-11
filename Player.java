@@ -11,9 +11,10 @@ public class Player {
     public final double centerX = 400;
     public final double centerY = 400;
     public Rotate playerRotate = new Rotate(0, centerX, centerY);
+    public double hue = 0;
 
 
-    public Player(Pane root, Color color) {
+    public Player(Pane root) {
         double sideSize = 15;
         double radius = 60;
         triangle = new Polygon();
@@ -22,9 +23,14 @@ public class Player {
                 centerX - (sideSize / 2), centerY - radius,
                 centerX + (sideSize / 2), centerY - radius
         );
-        triangle.setFill(color);
+        triangle.setFill(Color.hsb(0, 1, 1));
         root.getChildren().add(triangle);
         triangle.getTransforms().add(playerRotate);
+    }
+
+    public void updateColor() {
+        hue = hue + 0.1;
+        triangle.setFill(Color.hsb(hue, 1, 1));
     }
 
     public void rotate(double angle) {

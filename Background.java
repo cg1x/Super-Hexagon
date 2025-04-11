@@ -12,10 +12,10 @@ public class Background {
     public final double centerX = 400;
     public final double centerY = 400;
     public Rotate backGroundRotate = new Rotate(0, centerX, centerY);
+    public double hue = 0;
 
-    public Background(Pane root, Color color) {
+    public Background(Pane root) {
         double sideLength = 650;
-        BrightnessAdjuster adjuster = new BrightnessAdjuster();
 
         for (int i = 0; i < 6; i++) {
             double angle1 = Math.toRadians(i * 60);
@@ -33,14 +33,24 @@ public class Background {
             );
 
             if (i % 2 == 0)
-                sections[i].setFill(adjuster.newBrightness(color, 0.2));
+                sections[i].setFill(Color.hsb(0, 1, 0.2));
             else
-                sections[i].setFill(adjuster.newBrightness(color, 0.3));
+                sections[i].setFill(Color.hsb(0, 1, 0.3));
             root.getChildren().add(sections[i]);
         }
 
         for (Polygon section : sections) {
             section.getTransforms().add(backGroundRotate);
+        }
+    }
+
+    public void updateColor() {
+        hue = hue + 0.1;
+        for (int i = 0; i < 6; i++) {
+            if (i % 2 == 0)
+                sections[i].setFill(Color.hsb(hue, 1, 0.2));
+            else
+                sections[i].setFill(Color.hsb(hue, 1, 0.3));
         }
     }
 

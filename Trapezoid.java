@@ -30,6 +30,10 @@ public class Trapezoid {
         root.getChildren().add(trapezoid);
     }
 
+    public void updateColor(double hue) {
+        trapezoid.setFill(Color.hsb(hue, 1, 1));
+    }
+
     public boolean readyForNext() {
         double x = trapezoid.getPoints().get(0) - centerX;
         double y = trapezoid.getPoints().get(1) - centerY;

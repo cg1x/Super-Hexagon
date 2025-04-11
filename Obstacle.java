@@ -14,6 +14,7 @@ public class Obstacle {
     public List<Trapezoid> obstacles = new ArrayList<>();
     public Pane root;
     public Color color;
+    public double hue;
 
     public Obstacle(Pane root, Color color) {
         int pattern = (int)(Math.random() * 3);
@@ -47,6 +48,14 @@ public class Obstacle {
 
         this.root = root;
         this.color = color;
+        hue = color.getHue();
+    }
+
+    public void updateColor() {
+        hue = hue + 0.1;
+        for (Trapezoid trapezoid : obstacles) {
+            trapezoid.updateColor(hue);
+        }
     }
 
     public boolean readyForNext() {
@@ -55,7 +64,7 @@ public class Obstacle {
     }
 
     public void update(List<Obstacle> obstacles) {
-        obstacles.add(new Obstacle(root, color));
+        obstacles.add(new Obstacle(root, Color.hsb(hue, 1, 1)));
     }
 
     public void move(double speed) {

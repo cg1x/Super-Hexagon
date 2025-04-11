@@ -18,13 +18,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Pane root = new Pane();
-        BrightnessAdjuster adjuster = new BrightnessAdjuster();
-        Color color = Color.CYAN;
+        Color color = Color.hsb(0, 1, 1);
         Scene scene = new Scene(root, 800, 800, Color.BLACK);
 
-        Background background = new Background(root, color);
-        Hexagon hexagon = new Hexagon(root, color);
-        Player player = new Player(root, color);
+        Background background = new Background(root);
+        Hexagon hexagon = new Hexagon(root);
+        Player player = new Player(root);
         Obstacle obstacle = new Obstacle(root, color);
         Controller controller = new Controller(player);
         GameLoop gameLoop = new GameLoop(hexagon, background, player, controller, obstacle);

@@ -9,8 +9,9 @@ public class Hexagon {
     public Polygon hexagon;
     public final double centerX = 400;
     public final double centerY = 400;
+    public double hue = 0;
 
-    public Hexagon(Pane root, Color color) {
+    public Hexagon(Pane root) {
         hexagon = new Polygon();
         double radius = 50;
         for (int i = 0; i < 6; i++) {
@@ -19,11 +20,16 @@ public class Hexagon {
             double y = centerY + radius * Math.sin(angle);
             hexagon.getPoints().addAll(x, y);
         }
-        BrightnessAdjuster adjuster = new BrightnessAdjuster();
-        hexagon.setFill(adjuster.newBrightness(color, 0.2));
-        hexagon.setStroke(color);
+        hexagon.setFill(Color.hsb(0, 1, 0.2));
+        hexagon.setStroke(Color.hsb(0, 1, 1));
         hexagon.setStrokeWidth(4);
         root.getChildren().add(hexagon);
+    }
+
+    public void updateColor() {
+        hue = hue + 0.1;
+        hexagon.setFill(Color.hsb(hue, 1, 0.2));
+        hexagon.setStroke(Color.hsb(hue, 1, 1));
     }
 
     public void rotate(double angle) {

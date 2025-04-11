@@ -44,6 +44,7 @@ public class GameLoop extends AnimationTimer {
         if (controller.isMovingRight()) {
             player.move(playerSpeed + 2 * rotationSpeed);
         }
+        updateColor();
     }
 
     public boolean collided(Obstacle obstacle) {
@@ -54,5 +55,14 @@ public class GameLoop extends AnimationTimer {
                     result = true;
         }
         return result;
+    }
+
+    public void updateColor() {
+        hexagon.updateColor();
+        background.updateColor();
+        player.updateColor();
+        for (Obstacle obstacle : obstacles) {
+            obstacle.updateColor();
+        }
     }
 }
