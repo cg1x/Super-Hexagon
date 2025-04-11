@@ -7,44 +7,30 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
 
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Obstacle {
-    public Polygon trapezoid;
-    public final double centerX = 400;
-    public final double centerY = 400;
-    public Rotate obstacleRotate = new Rotate(0, centerX, centerY);
-    public double radius = 500;
-    public double thickness = 35;
+    public List<Trapezoid> obstacles = new ArrayList<>();
 
-    public Obstacle(Pane root, Color color, double angle) {
-        trapezoid = new Polygon();
-        double angle1 = Math.toRadians(angle);
-        double angle2 = Math.toRadians(angle + 60);
-        trapezoid.getPoints().addAll(
-                centerX + radius * Math.cos(angle1), centerY + radius * Math.sin(angle1),
-                centerX + (radius + thickness) * Math.cos(angle1), centerY + (radius + thickness) * Math.sin(angle1),
-                centerX + (radius + thickness) * Math.cos(angle2), centerY + (radius + thickness) * Math.sin(angle2),
-                centerX + radius * Math.cos(angle2), centerY + radius * Math.sin(angle2)
-        );
-        trapezoid.setFill(color);
-        trapezoid.getTransforms().add(obstacleRotate);
-        root.getChildren().add(trapezoid);
+    public Obstacle(Pane root, Color color) {
+        int random = (int)(Math.random() * 6);
+        for (int i = 0; i < 6; i++) {
+            if (i == random) continue;
+            Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
+            obstacles.add(trapezoid);
+        }
     }
 
     public void move(double speed) {
-        double hexagonRadius = 50;
-        for (int i = 0; i < 8; i += 2) {
-            double x = trapezoid.getPoints().get(i) - centerX;
-            double y = trapezoid.getPoints().get(i + 1) - centerY;
-            double distance = Math.sqrt((x * x) + (y * y));
-            if (distance > hexagonRadius) {
-                trapezoid.getPoints().set(i, centerX + x + (x / distance) * speed);
-                trapezoid.getPoints().set(i + 1, centerY + y + (y / distance) * speed);
-            }
+        for (Trapezoid obstacle : obstacles) {
+            obstacle.move(speed);
         }
     }
 
     public void rotate(double angle) {
-        obstacleRotate.setAngle(obstacleRotate.getAngle() - angle);
+        for (Trapezoid obstacle : obstacles) {
+            obstacle.rotate(angle);
+        }
     }
 }

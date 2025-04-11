@@ -10,7 +10,7 @@ public class GameLoop extends AnimationTimer {
     public Controller controller;
     public double rotationSpeed = 0.5;
     public double playerSpeed = 2;
-    public double obstacleSpeed = 0.5;
+    public double obstacleSpeed = 0.8;
 
     public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller, Obstacle obstacle) {
         this.hexagon = hexagon;

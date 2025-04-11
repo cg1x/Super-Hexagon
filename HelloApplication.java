@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
         Background background = new Background(root, color);
         Hexagon hexagon = new Hexagon(root, color);
         Player player = new Player(root, color);
-        Obstacle obstacle = new Obstacle(root, color, 0);
+        Obstacle obstacle = new Obstacle(root, color);
         Controller controller = new Controller(player);
         GameLoop gameLoop = new GameLoop(hexagon, background, player, controller, obstacle);
 
