@@ -29,7 +29,6 @@ public class HelloApplication extends Application {
         Controller controller = new Controller(player);
         GameLoop gameLoop = new GameLoop(hexagon, background, player, controller, obstacle);
 
-
         scene.setOnKeyPressed(controller::handleKeyPress);
         scene.setOnKeyReleased(controller::handleKeyRelease);
 

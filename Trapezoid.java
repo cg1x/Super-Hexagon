@@ -13,7 +13,7 @@ public class Trapezoid {
     public final double centerY = 400;
     public Rotate obstacleRotate = new Rotate(0, centerX, centerY);
     public double radius = 500;
-    public double thickness = 35;
+    public double thickness = 30;
 
     public Trapezoid(Pane root, Color color, double angle) {
         trapezoid = new Polygon();
@@ -28,6 +28,19 @@ public class Trapezoid {
         trapezoid.setFill(color);
         trapezoid.getTransforms().add(obstacleRotate);
         root.getChildren().add(trapezoid);
+    }
+
+    public boolean readyForNext() {
+        double x = trapezoid.getPoints().get(0) - centerX;
+        double y = trapezoid.getPoints().get(1) - centerY;
+        double distance = Math.sqrt((x * x) + (y * y));
+
+        if (distance < radius / 2) {
+            double angle = obstacleRotate.getAngle();
+            return angle % 60 == 0;
+        }
+
+        return false;
     }
 
     public void move(double speed) {

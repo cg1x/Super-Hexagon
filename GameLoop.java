@@ -2,11 +2,14 @@ package game.superhexagon;
 
 import javafx.animation.AnimationTimer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameLoop extends AnimationTimer {
     public Hexagon hexagon;
     public Background background;
     public Player player;
-    public Obstacle obstacle;
+    public List<Obstacle> obstacles = new ArrayList<>();
     public Controller controller;
     public double rotationSpeed = 0.5;
     public double playerSpeed = 2;
@@ -16,7 +19,7 @@ public class GameLoop extends AnimationTimer {
         this.hexagon = hexagon;
         this.background = background;
         this.player = player;
-        this.obstacle = obstacle;
+        obstacles.add(obstacle);
         this.controller = controller;
     }
     @Override
@@ -24,8 +27,13 @@ public class GameLoop extends AnimationTimer {
         hexagon.rotate(rotationSpeed);
         background.rotate(rotationSpeed);
         player.rotate(rotationSpeed);
-        obstacle.rotate(rotationSpeed);
-        obstacle.move(-obstacleSpeed);
+        for (Obstacle obstacle : obstacles) {
+            obstacle.rotate(rotationSpeed);
+            obstacle.move(-obstacleSpeed);
+        }
+        if (obstacles.getLast().readyForNext()) {
+            obstacles.getLast().update(obstacles);
+        }
         if (controller.isMovingLeft()) {
             player.move(-playerSpeed);
         }

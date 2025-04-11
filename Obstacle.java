@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Obstacle {
     public List<Trapezoid> obstacles = new ArrayList<>();
+    public Pane root;
+    public Color color;
 
     public Obstacle(Pane root, Color color) {
         int random = (int)(Math.random() * 6);
@@ -20,6 +22,17 @@ public class Obstacle {
             Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
             obstacles.add(trapezoid);
         }
+        this.root = root;
+        this.color = color;
+    }
+
+    public boolean readyForNext() {
+        Trapezoid trapezoid = obstacles.getFirst();
+        return trapezoid.readyForNext();
+    }
+
+    public void update(List<Obstacle> obstacles) {
+        obstacles.add(new Obstacle(root, color));
     }
 
     public void move(double speed) {
