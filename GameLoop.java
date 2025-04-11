@@ -1,6 +1,7 @@
 package game.superhexagon;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class GameLoop extends AnimationTimer {
         background.rotate(rotationSpeed);
         player.rotate(rotationSpeed);
         for (Obstacle obstacle : obstacles) {
+            if (collided(obstacle)) {
+                stop();
+            }
             obstacle.rotate(rotationSpeed);
             obstacle.move(-obstacleSpeed);
         }
@@ -40,5 +44,15 @@ public class GameLoop extends AnimationTimer {
         if (controller.isMovingRight()) {
             player.move(playerSpeed + 2 * rotationSpeed);
         }
+    }
+
+    public boolean collided(Obstacle obstacle) {
+        boolean result = false;
+        for (Trapezoid trapezoid : obstacle.obstacles) {
+            Shape shape = Shape.intersect(player.triangle, trapezoid.trapezoid);
+            if (shape.getBoundsInLocal().getWidth() != -1)
+                    result = true;
+        }
+        return result;
     }
 }
