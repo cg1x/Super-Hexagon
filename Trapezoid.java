@@ -35,7 +35,7 @@ public class Trapezoid {
         double y = trapezoid.getPoints().get(1) - centerY;
         double distance = Math.sqrt((x * x) + (y * y));
 
-        if (distance < radius / 2) {
+        if (distance < radius * 2 / 3) {
             double angle = obstacleRotate.getAngle();
             return angle % 60 == 0;
         }

@@ -16,12 +16,35 @@ public class Obstacle {
     public Color color;
 
     public Obstacle(Pane root, Color color) {
-        int random = (int)(Math.random() * 6);
-        for (int i = 0; i < 6; i++) {
-            if (i == random) continue;
-            Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
-            obstacles.add(trapezoid);
+        int pattern = (int)(Math.random() * 3);
+
+        if (pattern == 0) {
+            int random = (int)(Math.random() * 2);
+            for (int i = random; i < 6; i+=2) {
+                Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
+                obstacles.add(trapezoid);
+            }
         }
+
+        if (pattern == 1) {
+            int random = (int)(Math.random() * 6);
+            for (int i = 0; i < 6; i++) {
+                if (i == random) continue;
+                Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
+                obstacles.add(trapezoid);
+            }
+        }
+
+        if (pattern == 2) {
+            int random1 = (int) (Math.random() * 6);
+            int random2 = (int) (Math.random() * 6);
+            for (int i = 0; i < 6; i++) {
+                if (i == random1 || i == random2) continue;
+                Trapezoid trapezoid = new Trapezoid(root, color, i * 60);
+                obstacles.add(trapezoid);
+            }
+        }
+
         this.root = root;
         this.color = color;
     }
