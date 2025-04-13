@@ -2,6 +2,7 @@ package game.superhexagon;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,22 +13,35 @@ public class GameLoop extends AnimationTimer {
     public Player player;
     public List<Obstacle> obstacles = new ArrayList<>();
     public Controller controller;
-    public double rotationSpeed = 0.5;
-    public double playerSpeed = 2;
-    public double obstacleSpeed = 0.8;
+    public double startTime;
+    public Text timer;
+    public double rotationSpeed = 0.75;
+    public double playerSpeed = 1.5;
+    public double obstacleSpeed = 1;
+    public boolean firstTime = true;
 
-    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller, Obstacle obstacle) {
+    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller, Obstacle obstacle, Text timer) {
         this.hexagon = hexagon;
         this.background = background;
         this.player = player;
-        obstacles.add(obstacle);
+        this.obstacles.add(obstacle);
         this.controller = controller;
+        this.timer = timer;
+        this.startTime = System.nanoTime();
     }
     @Override
     public void handle(long l) {
         hexagon.rotate(rotationSpeed);
         background.rotate(rotationSpeed);
         player.rotate(rotationSpeed);
+        if (obstacles.size() % 5 == 0) {
+            if (firstTime) {
+                playerSpeed += 0.1;
+                obstacleSpeed += 0.1;
+                firstTime = false;
+            }
+        }
+        else firstTime = true;
         for (Obstacle obstacle : obstacles) {
             if (collided(obstacle)) {
                 stop();
@@ -44,6 +58,8 @@ public class GameLoop extends AnimationTimer {
         if (controller.isMovingRight()) {
             player.move(playerSpeed + 2 * rotationSpeed);
         }
+        double elapsedTime = (l - startTime) / 1_000_000_000.0;
+        timer.setText(String.format("TIME: %.2f", elapsedTime));
         updateColor();
     }
 

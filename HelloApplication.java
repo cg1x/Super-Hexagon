@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,7 +28,22 @@ public class HelloApplication extends Application {
         Player player = new Player(root);
         Obstacle obstacle = new Obstacle(root, color);
         Controller controller = new Controller(player);
-        GameLoop gameLoop = new GameLoop(hexagon, background, player, controller, obstacle);
+        Polygon timerBox = new Polygon();
+        timerBox.getPoints().addAll(
+                0.0, 0.0,
+                0.0, 40.0,
+                160.0, 40.0,
+                190.0, 0.0
+        );
+        timerBox.setFill(Color.BLACK);
+        root.getChildren().add(timerBox);
+        Text timer = new Text("TIME: 0.00");
+        timer.setFill(Color.WHITE);
+        timer.setFont(new Font("Verdana",24));
+        timer.setX(10);
+        timer.setY(30);
+        root.getChildren().add(timer);
+        GameLoop gameLoop = new GameLoop(hexagon, background, player, controller, obstacle, timer);
 
         scene.setOnKeyPressed(controller::handleKeyPress);
         scene.setOnKeyReleased(controller::handleKeyRelease);
