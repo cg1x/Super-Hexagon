@@ -16,6 +16,15 @@ public class Background {
 
     public Background(Pane root) {
         double sideLength = 650;
+        Polygon blackScene = new Polygon();
+        blackScene.getPoints().addAll(
+                0.0, 0.0,
+                0.0, 800.0,
+                800.0, 800.0,
+                800.0, 0.0
+        );
+        blackScene.setFill(Color.BLACK);
+        root.getChildren().add(blackScene);
 
         for (int i = 0; i < 6; i++) {
             double angle1 = Math.toRadians(i * 60);
