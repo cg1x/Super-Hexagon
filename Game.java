@@ -224,6 +224,54 @@ public class Game {
         bestTime.setY(30);
         boxes.getChildren().add(bestTime);
 
+        Polygon pauseBox = new Polygon();
+        pauseBox.getPoints().addAll(
+                0.0, 800.0,
+                0.0, 760.0,
+                150.0, 760.0,
+                180.0, 800.0
+        );
+        pauseBox.setFill(Color.BLACK);
+        boxes.getChildren().add(pauseBox);
+        Text pauseText = new Text("PAUSE [P]");
+        pauseText.setFill(Color.WHITE);
+        pauseText.setFont(new Font("Verdana",24));
+        pauseText.setX(15);
+        pauseText.setY(790);
+        boxes.getChildren().add(pauseText);
+
+        Polygon resumeBox = new Polygon();
+        resumeBox.getPoints().addAll(
+                800.0, 800.0,
+                800.0, 760.0,
+                640.0, 760.0,
+                610.0, 800.0
+        );
+        resumeBox.setFill(Color.BLACK);
+        boxes.getChildren().add(resumeBox);
+        Text reaumeText = new Text("RESUME [R]");
+        reaumeText.setFill(Color.WHITE);
+        reaumeText.setFont(new Font("Verdana",24));
+        reaumeText.setX(645);
+        reaumeText.setY(790);
+        boxes.getChildren().add(reaumeText);
+
+        Polygon backBox = new Polygon();
+        backBox.getPoints().addAll(
+                300.0, 800.0,
+                330.0, 760.0,
+                470.0, 760.0,
+                500.0, 800.0
+        );
+        backBox.setFill(Color.BLACK);
+        boxes.getChildren().add(backBox);
+        Text backText = new Text("BACK [B]");
+        backText.setFill(Color.WHITE);
+        backText.setFont(new Font("Verdana",24));
+        backText.setX(345);
+        backText.setY(790);
+        boxes.getChildren().add(backText);
+
         gameLoop = new GameLoop(hexagon, background, player, controller, obstacle, timer, this);
 
         scene.setOnKeyPressed(controller::handleKeyPress);

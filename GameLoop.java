@@ -13,13 +13,18 @@ public class GameLoop extends AnimationTimer {
     public Player player;
     public List<Obstacle> obstacles = new ArrayList<>();
     public Controller controller;
-    public double startTime;
     public Text timer;
     public Game game;
+    public double startTime;
+    public double elapsedTime;
+    public double pauseStartTime;
+    public double totalPausedTime = 0;
     public double rotationSpeed = 0.75;
     public double playerSpeed = 1.5;
     public double obstacleSpeed = 1;
     public boolean firstTime = true;
+    public boolean firstTimePaused = true;
+    public boolean paused = false;
     public double surviveTime;
 
     public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller,
@@ -31,11 +36,31 @@ public class GameLoop extends AnimationTimer {
         this.controller = controller;
         this.timer = timer;
         this.startTime = System.nanoTime();
+        this.pauseStartTime = System.nanoTime();
         this.game = game;
     }
     @Override
     public void handle(long l) {
-        double elapsedTime = (l - startTime) / 1_000_000_000.0;
+        if (controller.paused()) {
+            paused = true;
+            if (firstTimePaused) {
+                pauseStartTime = System.nanoTime();
+                firstTimePaused = false;
+            }
+        }
+        if (controller.resumed()) {
+            paused = false;
+            if (!firstTimePaused) {
+                totalPausedTime += System.nanoTime() - pauseStartTime;
+            }
+            firstTimePaused = true;
+        }
+        if (controller.back()) {
+            stop();
+            game.showMenu();
+        }
+        if (paused) return;
+        elapsedTime = (l - startTime - totalPausedTime) / 1_000_000_000.0;
         timer.setText(String.format("TIME: %.2f", elapsedTime));
         hexagon.rotate(rotationSpeed);
         background.rotate(rotationSpeed);

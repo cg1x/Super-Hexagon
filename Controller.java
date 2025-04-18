@@ -31,4 +31,16 @@ public class Controller {
     public boolean isMovingRight() {
         return activeKeys.contains(KeyCode.RIGHT);
     }
+
+    public boolean paused() {
+        return activeKeys.contains(KeyCode.P);
+    }
+
+    public boolean resumed() {
+        return activeKeys.contains(KeyCode.R);
+    }
+
+    public boolean back() {
+        return activeKeys.contains(KeyCode.B);
+    }
 }
