@@ -15,12 +15,15 @@ public class GameLoop extends AnimationTimer {
     public Controller controller;
     public double startTime;
     public Text timer;
+    public Game game;
     public double rotationSpeed = 0.75;
     public double playerSpeed = 1.5;
     public double obstacleSpeed = 1;
     public boolean firstTime = true;
+    public double surviveTime;
 
-    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller, Obstacle obstacle, Text timer) {
+    public GameLoop(Hexagon hexagon, Background background, Player player, Controller controller,
+                    Obstacle obstacle, Text timer, Game game) {
         this.hexagon = hexagon;
         this.background = background;
         this.player = player;
@@ -28,9 +31,12 @@ public class GameLoop extends AnimationTimer {
         this.controller = controller;
         this.timer = timer;
         this.startTime = System.nanoTime();
+        this.game = game;
     }
     @Override
     public void handle(long l) {
+        double elapsedTime = (l - startTime) / 1_000_000_000.0;
+        timer.setText(String.format("TIME: %.2f", elapsedTime));
         hexagon.rotate(rotationSpeed);
         background.rotate(rotationSpeed);
         player.rotate(rotationSpeed);
@@ -45,6 +51,8 @@ public class GameLoop extends AnimationTimer {
         for (Obstacle obstacle : obstacles) {
             if (collided(obstacle)) {
                 stop();
+                surviveTime = elapsedTime;
+                game.showGameOver();
             }
             obstacle.rotate(rotationSpeed);
             obstacle.move(-obstacleSpeed);
@@ -58,8 +66,6 @@ public class GameLoop extends AnimationTimer {
         if (controller.isMovingRight()) {
             player.move(playerSpeed + 2 * rotationSpeed);
         }
-        double elapsedTime = (l - startTime) / 1_000_000_000.0;
-        timer.setText(String.format("TIME: %.2f", elapsedTime));
         updateColor();
     }
 
