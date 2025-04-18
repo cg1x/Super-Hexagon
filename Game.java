@@ -60,6 +60,15 @@ public class Game {
         loginButton.setOnAction(e -> showMenu());
         root.getChildren().add(loginButton);
 
+        Button exitButton = new Button("EXIT");
+        exitButton.setPrefWidth(80);
+        exitButton.setPrefHeight(30);
+        exitButton.setLayoutX(370);
+        exitButton.setLayoutY(510);
+        exitButton.setFont(new Font("Verdana", 12));
+        exitButton.setOnAction(e -> Platform.exit());
+        root.getChildren().add(exitButton);
+
         stage.setTitle("Super Hexagon");
         Image icon = new Image("icon.png");
         stage.getIcons().add(icon);
@@ -85,6 +94,22 @@ public class Game {
         );
         blackBox.setFill(Color.BLACK);
         root.getChildren().add(blackBox);
+
+        Polygon bestTimeBox = new Polygon();
+        bestTimeBox.getPoints().addAll(
+                0.0, 0.0,
+                0.0, 40.0,
+                180.0, 40.0,
+                210.0, 0.0
+        );
+        bestTimeBox.setFill(Color.BLACK);
+        root.getChildren().add(bestTimeBox);
+        Text bestTime = new Text("BEST: 131.51");
+        bestTime.setFill(Color.WHITE);
+        bestTime.setFont(new Font("Verdana",24));
+        bestTime.setX(10);
+        bestTime.setY(30);
+        root.getChildren().add(bestTime);
 
         Button startButton = new Button("START GAME");
         startButton.setPrefWidth(200);
@@ -144,6 +169,22 @@ public class Game {
         );
         blackBox.setFill(Color.BLACK);
         root.getChildren().add(blackBox);
+
+        Polygon bestTimeBox = new Polygon();
+        bestTimeBox.getPoints().addAll(
+                0.0, 0.0,
+                0.0, 40.0,
+                180.0, 40.0,
+                210.0, 0.0
+        );
+        bestTimeBox.setFill(Color.BLACK);
+        root.getChildren().add(bestTimeBox);
+        Text bestTime = new Text("BEST: 131.51");
+        bestTime.setFill(Color.WHITE);
+        bestTime.setFont(new Font("Verdana",24));
+        bestTime.setX(10);
+        bestTime.setY(30);
+        root.getChildren().add(bestTime);
 
         Text surviveTime = new Text(String.format("YOU SURVIVED %.2f", gameLoop.surviveTime) + "s");
         surviveTime.setFill(Color.RED);
@@ -212,12 +253,12 @@ public class Game {
         bestTimeBox.getPoints().addAll(
                 0.0, 0.0,
                 0.0, 40.0,
-                170.0, 40.0,
-                200.0, 0.0
+                180.0, 40.0,
+                210.0, 0.0
         );
         bestTimeBox.setFill(Color.BLACK);
         boxes.getChildren().add(bestTimeBox);
-        Text bestTime = new Text("BEST: 00.00");
+        Text bestTime = new Text("BEST: 131.51");
         bestTime.setFill(Color.WHITE);
         bestTime.setFont(new Font("Verdana",24));
         bestTime.setX(10);
